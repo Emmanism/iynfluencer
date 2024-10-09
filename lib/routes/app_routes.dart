@@ -1,5 +1,40 @@
+import 'package:iynfluencer/data/models/Influencer/influencer_response_model.dart';
+import 'package:iynfluencer/data/models/Socials/social.dart';
+import 'package:iynfluencer/data/models/messages/chatmodel.dart';
+import 'package:iynfluencer/presentation/all_home_screen.dart/all_home_screen.dart';
+import 'package:iynfluencer/presentation/all_home_screen.dart/binding/all_home_page_binding.dart';
+import 'package:iynfluencer/presentation/bid_accepted_screen/bid_accepted_screen.dart';
+import 'package:iynfluencer/presentation/bid_accepted_screen/binding/bid_accepted_binding.dart';
+import 'package:iynfluencer/presentation/complete_job_screen/binding/complete_job_binding.dart';
+import 'package:iynfluencer/presentation/complete_job_screen/complete_job_screen.dart';
+import 'package:iynfluencer/presentation/creator_after_job_detail_screen/binding/creator_after_job_detail_binding.dart';
+import 'package:iynfluencer/presentation/creator_after_job_detail_screen/creator_after_job_detail_screen.dart';
+import 'package:iynfluencer/presentation/earning_menu_tab/binding/earning_tab_binding.dart';
+import 'package:iynfluencer/presentation/earning_menu_tab/earning_menu_tab_screen.dart';
+import 'package:iynfluencer/presentation/edit_bid_screen/binding/edit_binding.dart';
+import 'package:iynfluencer/presentation/edit_bid_screen/edit_bid_screen.dart';
+import 'package:iynfluencer/presentation/edit_profile_listed_jobs_tab_two_container_screen/binding/edit_profile_listed_jobs_tab_two_container_binding.dart';
+import 'package:iynfluencer/presentation/email_forget_screen/email_forget_screen.dart';
+import 'package:iynfluencer/presentation/fashion_home_screen.dart/binding/fashion_home_screen_binding.dart';
+import 'package:iynfluencer/presentation/fashion_home_screen.dart/fashion_home_screeen.dart';
 import 'package:iynfluencer/presentation/home_creator_container_screen/home_creator_container_screen.dart';
 import 'package:iynfluencer/presentation/home_creator_container_screen/binding/home_creator_container_binding.dart';
+import 'package:iynfluencer/presentation/influencer_job_tab_screen/binding/influencer_job_tab_binding.dart';
+import 'package:iynfluencer/presentation/influencer_job_tab_screen/influencer_job_tab_screen.dart';
+import 'package:iynfluencer/presentation/job_accepted_screen/binding/job_accepted_binding.dart';
+import 'package:iynfluencer/presentation/job_accepted_screen/job_accepted_screen.dart';
+import 'package:iynfluencer/presentation/job_hired_screen/binding/job_hired_binding.dart';
+import 'package:iynfluencer/presentation/job_hired_screen/job_hired_screen.dart';
+import 'package:iynfluencer/presentation/messages_page_influencer_page/messages_page_influencer_page.dart';
+import 'package:iynfluencer/presentation/messages_page_influencer_page/models/messages_page_influencer_model.dart';
+import 'package:iynfluencer/presentation/notification_firestore/binding/notification_firestore_binding.dart';
+import 'package:iynfluencer/presentation/notification_firestore/notification_firestore.dart';
+import 'package:iynfluencer/presentation/reset_password_screen/binding/reset_password_binding.dart';
+import 'package:iynfluencer/presentation/reset_password_screen/reset_password_screen.dart';
+import 'package:iynfluencer/presentation/review_accepted_screen/binding/review_accepted_binding.dart';
+import 'package:iynfluencer/presentation/review_accepted_screen/review_accepted_screen.dart';
+import 'package:iynfluencer/presentation/social_media_home_screen.dart/binding/social_media_home_page_binding.dart';
+import 'package:iynfluencer/presentation/social_media_home_screen.dart/social_media_home_page.dart';
 import 'package:iynfluencer/presentation/splash_screen/splash_screen.dart';
 import 'package:iynfluencer/presentation/splash_screen/binding/splash_binding.dart';
 import 'package:iynfluencer/presentation/onboarding_screen_one_screen/onboarding_screen_one_screen.dart';
@@ -22,8 +57,6 @@ import 'package:iynfluencer/presentation/complete_profile_influencer_screen/comp
 import 'package:iynfluencer/presentation/complete_profile_influencer_screen/binding/complete_profile_influencer_binding.dart';
 import 'package:iynfluencer/presentation/forgot_password_screen/forgot_password_screen.dart';
 import 'package:iynfluencer/presentation/forgot_password_screen/binding/forgot_password_binding.dart';
-import 'package:iynfluencer/presentation/post_page_screen/post_page_screen.dart';
-import 'package:iynfluencer/presentation/post_page_screen/binding/post_page_binding.dart';
 import 'package:iynfluencer/presentation/bids_screen/bids_screen.dart';
 import 'package:iynfluencer/presentation/bids_screen/binding/bids_binding.dart';
 import 'package:iynfluencer/presentation/bid_request_screen/bid_request_screen.dart';
@@ -54,15 +87,11 @@ import 'package:iynfluencer/presentation/search_creator_screen/search_creator_sc
 import 'package:iynfluencer/presentation/search_creator_screen/binding/search_creator_binding.dart';
 import 'package:iynfluencer/presentation/creator_profile_comm_posts_tab_container_screen/creator_profile_comm_posts_tab_container_screen.dart';
 import 'package:iynfluencer/presentation/creator_profile_comm_posts_tab_container_screen/binding/creator_profile_comm_posts_tab_container_binding.dart';
-import 'package:iynfluencer/presentation/influencer_home_screen/influencer_home_screen.dart';
-import 'package:iynfluencer/presentation/influencer_home_screen/binding/influencer_home_binding.dart';
 import 'package:iynfluencer/presentation/creator_profile_reveiws_tab_container_screen/creator_profile_reveiws_tab_container_screen.dart';
 import 'package:iynfluencer/presentation/creator_profile_reveiws_tab_container_screen/binding/creator_profile_reveiws_tab_container_binding.dart';
 import 'package:iynfluencer/presentation/job_details_screen/job_details_screen.dart';
 import 'package:iynfluencer/presentation/job_details_screen/binding/job_details_binding.dart';
 
-import 'package:iynfluencer/presentation/jobs_jobs_influencer_tab_container_screen/jobs_jobs_influencer_tab_container_screen.dart';
-import 'package:iynfluencer/presentation/jobs_jobs_influencer_tab_container_screen/binding/jobs_jobs_influencer_tab_container_binding.dart';
 
 import 'package:iynfluencer/presentation/community_influncer_screen/community_influncer_screen.dart';
 import 'package:iynfluencer/presentation/community_influncer_screen/binding/community_influncer_binding.dart';
@@ -70,8 +99,6 @@ import 'package:iynfluencer/presentation/bid_screen/bid_screen.dart';
 import 'package:iynfluencer/presentation/bid_screen/binding/bid_binding.dart';
 import 'package:iynfluencer/presentation/edit_profile_details_one_screen/edit_profile_details_one_screen.dart';
 import 'package:iynfluencer/presentation/edit_profile_details_one_screen/binding/edit_profile_details_one_binding.dart';
-import 'package:iynfluencer/presentation/chats_opened_one_screen/chats_opened_one_screen.dart';
-import 'package:iynfluencer/presentation/chats_opened_one_screen/binding/chats_opened_one_binding.dart';
 import 'package:iynfluencer/presentation/request_detail_screen/request_detail_screen.dart';
 import 'package:iynfluencer/presentation/request_detail_screen/binding/request_detail_binding.dart';
 import 'package:iynfluencer/presentation/charge_screen/charge_screen.dart';
@@ -94,12 +121,8 @@ import 'package:iynfluencer/presentation/request_accepted_screen/request_accepte
 import 'package:iynfluencer/presentation/request_accepted_screen/binding/request_accepted_binding.dart';
 import 'package:iynfluencer/presentation/community_post_screen/community_post_screen.dart';
 import 'package:iynfluencer/presentation/community_post_screen/binding/community_post_binding.dart';
-import 'package:iynfluencer/presentation/messages_page_one_screen/messages_page_one_screen.dart';
-import 'package:iynfluencer/presentation/messages_page_one_screen/binding/messages_page_one_binding.dart';
 import 'package:iynfluencer/presentation/comments_on_community_screen/comments_on_community_screen.dart';
 import 'package:iynfluencer/presentation/comments_on_community_screen/binding/comments_on_community_binding.dart';
-import 'package:iynfluencer/presentation/chats_screen/chats_screen.dart';
-import 'package:iynfluencer/presentation/chats_screen/binding/chats_binding.dart';
 import 'package:iynfluencer/presentation/complet_payment_screen/complet_payment_screen.dart';
 import 'package:iynfluencer/presentation/complet_payment_screen/binding/complet_payment_binding.dart';
 import 'package:iynfluencer/presentation/payment_card_screen/payment_card_screen.dart';
@@ -108,6 +131,12 @@ import 'package:iynfluencer/presentation/payment_transfer_screen/payment_transfe
 import 'package:iynfluencer/presentation/payment_transfer_screen/binding/payment_transfer_binding.dart';
 import 'package:iynfluencer/presentation/dispute_screen/dispute_screen.dart';
 import 'package:iynfluencer/presentation/dispute_screen/binding/dispute_binding.dart';
+import 'package:iynfluencer/presentation/technology_home_screen/binding/controller/model/binding/technology_home_screen_binding.dart';
+import 'package:iynfluencer/presentation/technology_home_screen/binding/controller/model/technology_home_screen.dart';
+import 'package:iynfluencer/presentation/transactions_screen/binding/transaction_binding.dart';
+import 'package:iynfluencer/presentation/transactions_screen/transaction_screen.dart';
+import 'package:iynfluencer/presentation/withdraw_transaction/binding/withdraw_transaction_binding.dart';
+import 'package:iynfluencer/presentation/withdraw_transaction/withdraw_transaction.dart';
 import 'package:iynfluencer/presentation/withdrawal_screen/withdrawal_screen.dart';
 import 'package:iynfluencer/presentation/withdrawal_screen/binding/withdrawal_binding.dart';
 import 'package:iynfluencer/presentation/withdrawal_successful_screen/withdrawal_successful_screen.dart';
@@ -128,10 +157,13 @@ import '../presentation/choose_profile/choose_profile.dart';
 import '../presentation/choose_profile/choose_profile_bindings/choose_profile_binding.dart';
 import '../presentation/creator_job_details/binding/creator_job_details_binding.dart';
 import '../presentation/creator_job_details/creator_job_details_screen.dart';
+import '../presentation/edit_profile_listed_jobs_tab_two_container_screen/edit_profile_listed_jobs_tab_two_container_screen.dart';
 import '../presentation/email_code/email_code.dart';
 import '../presentation/email_code/email_code_bindings/email_code_bindings.dart';
 import '../presentation/influencer_tabs/binding/influencer_binding.dart';
 import '../presentation/influencer_tabs/infuencer_tabs.dart';
+import '../presentation/settings/binding/settings_binding.dart';
+import '../presentation/settings/settings_screen.dart';
 
 class AppRoutes {
   static const String homeCreatorPage = '/home_creator_page';
@@ -160,6 +192,8 @@ class AppRoutes {
 
   static const String emailCodeScreen = '/email_code_screen/:param1/:param2';
 
+  static const String emailForgetScreen = '/email_forget_screen/:param1/:param2';
+
   static const String completeProfileCreatorScreen =
       '/complete_profile_creator_screen';
 
@@ -167,6 +201,8 @@ class AppRoutes {
       '/complete_profile_influencer_screen';
 
   static const String forgotPasswordScreen = '/forgot_password_screen';
+
+  static const String resetPasswordScreen = '/reset_password_screen';
 
   static const String creatorJobslistPage = '/creator_jobslist_page';
 
@@ -216,8 +252,14 @@ class AppRoutes {
   static const String editProfileListedJobsTabContainerScreen =
       '/edit_profile_listed_jobs_tab_container_screen';
 
+  static const String editProfileListedJobsTabTwoContainerScreen =
+      '/edit_profile_listed_jobs_tab_two_container_screen';
+
   static const String editProfileCommPostsPage =
       '/edit_profile_comm_posts_page';
+
+  static const String transactionScreen =
+      '/transaction_screen';
 
   static const String editProfileDetailsScreen = '/edit_profile_details_screen';
 
@@ -255,6 +297,12 @@ class AppRoutes {
 
   static const String jobDetailsScreen = '/job_details_screen';
 
+  static const String jobHiredScreen = '/job_hired_screen';
+
+  static const String reviewAcceptedScreen = '/review_accepted';
+
+  static const String influencerJobTabScreen = '/influencer_job_tab_screen';
+
   static const String creatorJobDetailsScreen = '/creator_job_details_screen';
 
   static const String jobsMyBidsInfluencerPage =
@@ -281,6 +329,10 @@ class AppRoutes {
 
   static const String bidScreen = '/bid_screen';
 
+  static const String editScreen = '/edit_screen';
+
+  static const String completeJobScreen = '/complete_job_screen';
+
   static const String editProfileAboutPage = '/edit_profile_about_page';
 
   static const String editProfileCommPostPage = '/edit_profile_comm_post_page';
@@ -293,6 +345,8 @@ class AppRoutes {
   static const String chatsOpenedOneScreen = '/chats_opened_one_screen';
 
   static const String requestDetailScreen = '/request_detail_screen';
+
+  static const String settingsScreen = '/settings_screen';
 
   static const String chargeScreen = '/charge_screen';
 
@@ -316,7 +370,25 @@ class AppRoutes {
 
   static const String requestAcceptedScreen = '/request_accepted_screen';
 
+  static const String jobAcceptedScreen = '/job_accepted_screen';
+
+  static const String bidAcceptedScreen = '/bid_accepted_screen';
+
   static const String communityPostScreen = '/community_post_screen';
+
+  static const String notificationFirestore = '/notification_firestore';
+
+  static const String earningMenuTabScreen = '/earning_menu_tab_screen';
+
+  static const String allHomePage = '/all_home_screen';
+
+  static const String creatorAfterJobDetailsScreen = '/creator_after_job_details_screen';
+
+  static const String fashionHomePage = '/fashion_home_screen';
+
+  static const String technologyHomePage = '/technology_home_screen';
+
+  static const String socialMediaHomePage = '/social_media_home_screen';
 
   static const String messagesPageOneScreen = '/messages_page_one_screen';
 
@@ -334,6 +406,8 @@ class AppRoutes {
   static const String disputeScreen = '/dispute_screen';
 
   static const String withdrawalScreen = '/withdrawal_screen';
+
+  static const String withdrawalTransactionScreen = '/withdrawal_transaction_screen';
 
   static const String withdrawalSuccessfulScreen =
       '/withdrawal_successful_screen';
@@ -386,6 +460,22 @@ class AppRoutes {
         OnboardingScreenTwoBinding(),
       ],
     ),
+
+    GetPage(
+      name: settingsScreen,
+      page: () => SettingsScreen(),
+      bindings: [
+        SettingsBinding(),
+      ],
+    ),
+
+    GetPage(
+      name: bidAcceptedScreen,
+      page: () => BidAcceptedScreen(),
+      bindings: [
+        BidAcceptedBinding(),
+      ],
+    ),
     GetPage(
       name: onboardingScreenThreeScreen,
       page: () => OnboardingScreenThreeScreen(),
@@ -395,7 +485,14 @@ class AppRoutes {
     ),
     GetPage(
       name: emailCodeScreen,
-      page: () => EmailCodeScreen(email: '', code: ''),
+      page: () => EmailCodeScreen(),
+      bindings: [
+        EmailCodeBinding(),
+      ],
+    ),
+    GetPage(
+      name: emailForgetScreen,
+      page: () => EmailForgetScreen(),
       bindings: [
         EmailCodeBinding(),
       ],
@@ -442,11 +539,35 @@ class AppRoutes {
         CompleteProfileInfluencerBinding(),
       ],
     ),
+
+    GetPage(
+      name: notificationFirestore,
+      page: () => NotificationFirestore(),
+      bindings: [
+        NotificationFirestoreBinding(),
+      ],
+    ),
+
+    GetPage(
+      name: earningMenuTabScreen,
+      page: () =>  EarningMenuTabScreen(),
+      bindings: [
+        EarningTabBinding(),
+      ],
+    ),
+
     GetPage(
       name: forgotPasswordScreen,
       page: () => ForgotPasswordScreen(),
       bindings: [
         ForgotPasswordBinding(),
+      ],
+    ),
+    GetPage(
+      name: resetPasswordScreen,
+      page: () => ResetPasswordScreen(),
+      bindings: [
+        ResetPasswordBinding(),
       ],
     ),
     GetPage(
@@ -464,6 +585,20 @@ class AppRoutes {
       ],
     ),
     GetPage(
+      name: editScreen,
+      page: () => EditBidScreen(),
+      bindings: [
+        EditBidBinding(),
+      ],
+    ),
+    GetPage(
+      name: completeJobScreen,
+      page: () => CompleteJobScreen(),
+      bindings: [
+        CompleteJobBinding(),
+      ],
+    ),
+    GetPage(
       name: bidRequestScreen,
       page: () => BidRequestScreen(),
       bindings: [
@@ -478,10 +613,39 @@ class AppRoutes {
       ],
     ),
     GetPage(
+      name: jobHiredScreen,
+      page: () => JobHiredScreen(),
+      bindings: [
+        JobHiredBinding(),
+      ],
+    ),
+    GetPage(
+      name: influencerJobTabScreen,
+      page: () =>   InfluencerJobTabScreen(),
+      bindings: [
+        InfluencerJobTabBinding(),
+      ],
+    ),
+    GetPage(
       name: searchInfluncersScreen,
       page: () => SearchInfluncersScreen(),
       bindings: [
         SearchInfluncersBinding(),
+      ],
+    ),
+
+    GetPage(
+      name: reviewAcceptedScreen,
+      page: () => ReviewAcceptedScreen(),
+      bindings: [
+        ReviewAcceptedBinding(),
+      ],
+    ),
+    GetPage(
+      name: jobAcceptedScreen,
+      page: () => JobAcceptedScreen(),
+      bindings: [
+        JobAcceptedBinding(),
       ],
     ),
     GetPage(
@@ -500,9 +664,77 @@ class AppRoutes {
     ),
     GetPage(
       name: chatsOpenedScreen,
-      page: () => ChatsOpenedScreen(),
+      page: () => ChatsOpenedScreen(
+      chatData:  ChatData(
+      id: 'id',
+      creatorId: 'CreatorId',
+      creatorUserId: 'CreatorUserId',
+      influencerId: 'InfluencerId',
+      influencerUserId: 'defaultInfluencerUserId',
+      unreadByCreator: 0,
+      unreadByInfluencer: 0,
+      blockedByCreator: false,
+      blockedByInfluencer: false,
+      chatId: 'defaultChatId',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      messages: const [],
+      influencerUser: UserModel(
+        id: 'id',
+        firstName: 'firstName', 
+        lastName: 'lastName', 
+        email: 'email', 
+        password: 'password',
+        termsAndConditionsAgreement: false,
+        isNewUser: false,
+        isSocial: false,
+        verified: false,
+        verifiedEmail: false,
+        followers: 0,
+        following: 0,
+        views: 0, 
+        userId: 'userId', 
+        createdAt: '', 
+        updatedAt: '',
+        creatorId: 'creatorId', 
+        influencerId: 'influencerId', 
+        country: 'country', 
+        dob: 'dob',
+        phone: 'phone', 
+        username: 'username',
+         avatar: 'avatar', 
+         cover: 'cover'),
+      creatorUser: UserModel(
+        id: 'id',
+        firstName: 'firstName', 
+        lastName: 'lastName', 
+        email: 'email', 
+        password: 'password',
+        termsAndConditionsAgreement: false,
+        isNewUser: false,
+        isSocial: false,
+        verified: false,
+        verifiedEmail: false,
+        followers: 0,
+        following: 0,
+        views: 0, 
+        userId: 'userId', 
+        createdAt: '', 
+        updatedAt: '',
+        creatorId: 'creatorId', 
+        influencerId: 'influencerId', 
+        country: 'country', 
+        dob: 'dob',
+        phone: 'phone', 
+        username: 'username',
+         avatar: 'avatar', 
+         cover: 'cover'),
+      
+      ),
+
+      ),
       bindings: [
-        ChatsOpenedBinding(),
+        ChatsOpenedBinding()
       ],
     ),
     GetPage(
@@ -516,6 +748,14 @@ class AppRoutes {
       page: () => EditProfileListedJobsTabContainerScreen(),
       bindings: [
         EditProfileListedJobsTabContainerBinding(),
+      ],
+    ),
+
+    GetPage(
+      name: editProfileListedJobsTabTwoContainerScreen,
+      page: () => EditProfileListedJobsTabTwoContainerScreen(),
+      bindings: [
+        EditProfileListedJobsTabTwoContainerBinding(),
       ],
     ),
     GetPage(
@@ -561,6 +801,13 @@ class AppRoutes {
       ],
     ),
     GetPage(
+      name: transactionScreen,
+      page: () => TransactionScreen(),
+      bindings: [
+        TransactionBinding(),
+      ],
+    ),
+    GetPage(
       name: creatorProfileCommPostsTabContainerScreen,
       page: () => CreatorProfileCommPostsTabContainerScreen(),
       bindings: [
@@ -593,6 +840,13 @@ class AppRoutes {
       page: () => CreatorJobDetailsScreen(),
       bindings: [
         CreatorJobDetailsBinding(),
+      ],
+    ),
+    GetPage(
+      name: creatorAfterJobDetailsScreen,
+      page: () => CreatorAfterJobDetailsScreen(),
+      bindings: [
+        CreatorAfterJobDetailsBinding(),
       ],
     ),
     // GetPage(
@@ -637,13 +891,7 @@ class AppRoutes {
         EditProfileDetailsOneBinding(),
       ],
     ),
-    GetPage(
-      name: chatsOpenedOneScreen,
-      page: () => ChatsOpenedOneScreen(),
-      bindings: [
-        ChatsOpenedOneBinding(),
-      ],
-    ),
+
     GetPage(
       name: requestDetailScreen,
       page: () => RequestDetailScreen(),
@@ -722,24 +970,10 @@ class AppRoutes {
       ],
     ),
     GetPage(
-      name: messagesPageOneScreen,
-      page: () => MessagesPageOneScreen(),
-      bindings: [
-        MessagesPageOneBinding(),
-      ],
-    ),
-    GetPage(
       name: commentsOnCommunityScreen,
       page: () => CommentsOnCommunityScreen(),
       bindings: [
         CommentsOnCommunityBinding(),
-      ],
-    ),
-    GetPage(
-      name: chatsScreen,
-      page: () => ChatsScreen(),
-      bindings: [
-        ChatsBinding(),
       ],
     ),
     GetPage(
@@ -772,9 +1006,16 @@ class AppRoutes {
     ),
     GetPage(
       name: withdrawalScreen,
-      page: () => WithdrawalScreen(),
+      page : () => WithdrawalScreen(),
       bindings: [
         WithdrawalBinding(),
+      ],
+    ),
+    GetPage(
+      name: withdrawalTransactionScreen,
+      page : () => WithdrawTransactionScreen(),
+      bindings: [
+        WithdrawTransactionBinding(),
       ],
     ),
     GetPage(
@@ -824,12 +1065,19 @@ class AppRoutes {
     // SplashBinding(),
     // ]),
 
-    GetPage(
+   //  GetPage(
+   //   name: initialRoute,
+   //   page: () => AppNavigationScreen(),
+   //   bindings: [
+   //     AppNavigationBinding(),
+   //    ],
+   //  )
+   GetPage(
       name: initialRoute,
       page: () => SplashScreen(),
       bindings: [
         SplashBinding(),
-      ],
+     ],
     )
   ];
 }

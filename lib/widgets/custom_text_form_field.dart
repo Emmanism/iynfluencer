@@ -22,7 +22,14 @@ class CustomTextFormField extends StatelessWidget {
       this.prefixConstraints,
       this.suffix,
       this.suffixConstraints,
-      this.validator});
+      this.validator,
+      this.height,
+      this.onChanged,
+      this.onSubmitted,
+      this.onPressed,
+      this.label,
+      this.query
+      });
 
   TextFormFieldShape? shape;
 
@@ -36,7 +43,11 @@ class CustomTextFormField extends StatelessWidget {
 
   double? width;
 
+  double? height;
+
   EdgeInsetsGeometry? margin;
+
+  String? label;
 
   TextEditingController? controller;
 
@@ -64,6 +75,14 @@ class CustomTextFormField extends StatelessWidget {
 
   FormFieldValidator<String>? validator;
 
+  void Function(String)? onChanged;
+
+  void Function(String)? onSubmitted;
+
+  final VoidCallback? onPressed;
+
+  final String? query;
+
   @override
   Widget build(BuildContext context) {
     return alignment != null
@@ -79,6 +98,7 @@ class CustomTextFormField extends StatelessWidget {
       width: width ?? double.maxFinite,
       margin: margin,
       child: TextFormField(
+       // initialValue: query ?? '',
         controller: controller,
         focusNode: focusNode,
         autofocus: autofocus!,
@@ -89,14 +109,20 @@ class CustomTextFormField extends StatelessWidget {
         maxLines: maxLines ?? 1,
         decoration: _buildDecoration(),
         validator: validator,
+        onChanged: (text) {
+          if (onChanged != null) {
+            onChanged!(text);
+          }
+        },
       ),
     );
   }
 
   _buildDecoration() {
     return InputDecoration(
+      labelText: label ?? null,
       hintText: hintText ?? "",
-      hintStyle: _setFontStyle(),
+      hintStyle: _setHintStyle(),
       border: _setBorderStyle(),
       enabledBorder: _setBorderStyle(),
       focusedBorder: _setBorderStyle(),
@@ -116,7 +142,84 @@ class CustomTextFormField extends StatelessWidget {
     switch (fontStyle) {
       case TextFormFieldFontStyle.SatoshiLight14:
         return TextStyle(
-          color: ColorConstant.gray600Ab,
+          color: ColorConstant.black900,
+          fontSize: getFontSize(
+            14,
+          ),
+          fontFamily: 'Satoshi',
+          fontWeight: FontWeight.w400,
+        );
+      case TextFormFieldFontStyle.SatoshiBold22:
+        return TextStyle(
+          color: ColorConstant.gray600,
+          fontSize: getFontSize(
+            22,
+          ),
+          fontFamily: 'Satoshi',
+          fontWeight: FontWeight.w700,
+        );
+      case TextFormFieldFontStyle.SatoshiBold10:
+        return TextStyle(
+          color: ColorConstant.whiteA700,
+          fontSize: getFontSize(
+            15,
+          ),
+          fontFamily: 'Satoshi',
+          fontWeight: FontWeight.w700,
+        );
+      case TextFormFieldFontStyle.SatoshiLight14Gray600:
+        return TextStyle(
+          color: ColorConstant.gray600,
+          fontSize: getFontSize(
+            14,
+          ),
+          fontFamily: 'Satoshi',
+          fontWeight: FontWeight.w300,
+        );
+      case TextFormFieldFontStyle.SatoshiBold13:
+        return TextStyle(
+          color: ColorConstant.gray900,
+          fontSize: getFontSize(
+            13,
+          ),
+          fontFamily: 'Satoshi',
+          fontWeight: FontWeight.w700,
+        );
+      case TextFormFieldFontStyle.SatoshiLight13:
+        return TextStyle(
+          color: ColorConstant.gray600,
+          fontSize: getFontSize(
+            13,
+          ),
+          fontFamily: 'Satoshi',
+          fontWeight: FontWeight.w300,
+        );
+      case TextFormFieldFontStyle.SatoshiLight20:
+        return TextStyle(
+          color: ColorConstant.gray600,
+          fontSize: getFontSize(
+            20,
+          ),
+          fontFamily: 'Satoshi',
+          fontWeight: FontWeight.w300,
+        );
+      default:
+        return TextStyle(
+          color: ColorConstant.black900,
+          fontSize: getFontSize(
+            14,
+          ),
+          fontFamily: 'Satoshi',
+          fontWeight: FontWeight.w400,
+        );
+    }
+  }
+  
+  _setHintStyle() {
+    switch (fontStyle) {
+      case TextFormFieldFontStyle.SatoshiLight14:
+        return TextStyle(
+          color: Colors.black,
           fontSize: getFontSize(
             14,
           ),
@@ -136,7 +239,7 @@ class CustomTextFormField extends StatelessWidget {
         return TextStyle(
           color: ColorConstant.whiteA700,
           fontSize: getFontSize(
-            10,
+            15,
           ),
           fontFamily: 'Satoshi',
           fontWeight: FontWeight.w700,
@@ -224,7 +327,10 @@ class CustomTextFormField extends StatelessWidget {
           borderSide: BorderSide.none,
         );
       case TextFormFieldVariant.None:
-        return InputBorder.none;
+        return OutlineInputBorder(
+          borderRadius: _setOutlineBorderRadius(),
+          borderSide: BorderSide(width: 1.0, color: Colors.lightBlue.shade50),
+        );
       default:
         return OutlineInputBorder(
           borderRadius: _setOutlineBorderRadius(),
@@ -315,6 +421,7 @@ enum TextFormFieldShape {
   RoundedBorder6,
   CircleBorder10,
 }
+
 enum TextFormFieldPadding {
   PaddingAll14,
   PaddingT14,
@@ -325,6 +432,7 @@ enum TextFormFieldPadding {
   PaddingT9,
   PaddingAll9,
 }
+
 enum TextFormFieldVariant {
   None,
   FillGray100,
@@ -332,6 +440,7 @@ enum TextFormFieldVariant {
   FillCyan300,
   FillCyan3005e,
 }
+
 enum TextFormFieldFontStyle {
   SatoshiLight14Gray900ab,
   SatoshiLight14,

@@ -12,10 +12,10 @@ class PaymentFailedScreen extends GetWidget<PaymentFailedController> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ColorConstant.whiteA700,
-        body: Container(
+    return Scaffold(
+      backgroundColor: ColorConstant.whiteA700,
+      body: SafeArea(
+        child: Container(
           width: double.maxFinite,
           padding: getPadding(
             left: 20,
@@ -84,6 +84,9 @@ class PaymentFailedScreen extends GetWidget<PaymentFailedController> {
                 padding: ButtonPadding.PaddingAll15,
               ),
               CustomButton(
+                onTap: () {
+                  onTapHome();
+                },
                 height: getVerticalSize(
                   19,
                 ),
@@ -102,5 +105,9 @@ class PaymentFailedScreen extends GetWidget<PaymentFailedController> {
         ),
       ),
     );
+  }
+
+  onTapHome() {
+    Get.back();
   }
 }

@@ -8,15 +8,13 @@ import 'package:iynfluencer/widgets/custom_button.dart';
 
 // ignore: must_be_immutable
 class HiresItemWidget extends StatelessWidget {
-  HiresItemWidget(
-    this.hiresItemlistObj, {
-    Key? key,
-    this.onTapBidcard,
-  }) : super(
-          key: key,
-        );
+   final Job? hiresItemlistObj;
 
-  Job hiresItemlistObj;
+  HiresItemWidget({
+     this.hiresItemlistObj,
+    this.onTapBidcard,
+  });
+
 
   var controller = Get.find<CreatorHireslistController>();
 
@@ -24,8 +22,35 @@ class HiresItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DateTime? parsedDate =
+        DateTime.tryParse(hiresItemlistObj?.createdAt ?? "lbl_mar_18_2023".tr);
+    String formattedDate = parsedDate != null
+        ? "${parsedDate.year}-${parsedDate.month.toString().padLeft(2, '0')}-${parsedDate.day.toString().padLeft(2, '0')}"
+        : 'Unknown Date';
+
+    String? capitalizeFirstLetter(String? text) {
+      if (text == null || text.isEmpty) {
+        return text;
+      }
+      return text[0].toUpperCase() + text.substring(1);
+    }
+
+    String? avatarUrl = 
+  // 'https://iynf-kong-akbf9.ondigitalocean.app/users/avatars/user-${hiresItemlistObj?.user.first.}-avatar.jpeg' ?? ImageConstant.imgGroup85235x35;
+    hiresItemlistObj?.user?.avatar ?? ImageConstant.imgGroup85235x35;
+    String imageProvider;
+
+    print(avatarUrl);
+
+    if (avatarUrl != null && avatarUrl.isNotEmpty) {
+      imageProvider = avatarUrl;
+    } else {
+      imageProvider = 'https://cdn-icons-png.flaticon.com/512/6915/6915987.png';
+    }
+
+
     return SizedBox(
-      width: double.maxFinite,
+      width: getHorizontalSize(336),
       child: GestureDetector(
         onTap: () {
           onTapBidcard?.call();
@@ -52,7 +77,8 @@ class HiresItemWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomImageView(
-                      imagePath: ImageConstant.imgGroup85250x50,
+                      fit: BoxFit.cover,
+                      url: imageProvider,
                       height: getSize(
                         50,
                       ),
@@ -73,9 +99,10 @@ class HiresItemWidget extends StatelessWidget {
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "lbl_mark_adebayo".tr,
+                          Text(          
+                          "${capitalizeFirstLetter(hiresItemlistObj?.user?.firstName)}-${capitalizeFirstLetter(hiresItemlistObj?.user?.lastName)}",
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.left,
                             style: AppStyle.txtSatoshiBold145,
@@ -101,10 +128,11 @@ class HiresItemWidget extends StatelessWidget {
                                 ),
                                 Padding(
                                   padding: getPadding(
-                                    left: 6,
+                                    left: 3,
                                   ),
                                   child: Text(
-                                    "lbl_lagos_nigeria".tr,
+                                    hiresItemlistObj?.user?.country ??
+                                        "lbl_lagos_nigeria".tr,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
                                     style: AppStyle.txtSatoshiLight14,
@@ -151,11 +179,17 @@ class HiresItemWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text(
-                            "lbl_project_status".tr,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: AppStyle.txtSatoshiLight135Gray600,
+                          Padding(
+                            padding: getPadding(
+                            top: 1,
+                            bottom: 4,
+                            ),
+                            child: Text(
+                              "lbl_project_status".tr,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
+                              style: AppStyle.txtSatoshiLight135Gray600,
+                            ),
                           ),
                           CustomButton(
                             height: getVerticalSize(
@@ -164,14 +198,22 @@ class HiresItemWidget extends StatelessWidget {
                             width: getHorizontalSize(
                               83,
                             ),
-                            text: "lbl_in_progress".tr,
+                            text: '${hiresItemlistObj?.status ?? ''}'.tr,
                             margin: getMargin(
                               top: 3,
                             ),
-                            variant: ButtonVariant.FillLime100b2,
-                            shape: ButtonShape.RoundedBorder12,
+                            variant: hiresItemlistObj?.status == 'Completed' 
+                             ? ButtonVariant.FillGreenA10099 :
+                              hiresItemlistObj?.status == 'In Progress' 
+                              ?  ButtonVariant.FillLime100b2 
+                              : ButtonVariant.FillRed10099,
+                            shape: ButtonShapes.RoundedBorder12,
                             padding: ButtonPadding.PaddingAll4,
-                            fontStyle: ButtonFontStyle.SatoshiBold115,
+                            fontStyle: hiresItemlistObj?.status == 'In Progress' 
+                            ? ButtonFontStyle.SatoshiBold115 
+                            : hiresItemlistObj?.status == 'Completed' 
+                            ? ButtonFontStyle.SatoshiBold115Green700
+                            : ButtonFontStyle.SatoshiBold115Red700,
                           ),
                         ],
                       ),
@@ -191,12 +233,13 @@ class HiresItemWidget extends StatelessWidget {
                             textAlign: TextAlign.left,
                             style: AppStyle.txtSatoshiLight135Gray600,
                           ),
+                          SizedBox(height: 15),
                           Padding(
                             padding: getPadding(
                               top: 7,
                             ),
                             child: Text(
-                              "lbl_200".tr,
+                             "\$${hiresItemlistObj?.amount}",
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.left,
                               style: AppStyle.txtSatoshiBold125Gray900a7,
@@ -219,12 +262,13 @@ class HiresItemWidget extends StatelessWidget {
                             textAlign: TextAlign.left,
                             style: AppStyle.txtSatoshiLight135Gray600,
                           ),
+                          SizedBox(height: 15),
                           Padding(
                             padding: getPadding(
                               top: 9,
                             ),
                             child: Text(
-                              "lbl_mar_18_2023".tr,
+                             "$formattedDate",
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.left,
                               style: AppStyle.txtSatoshiBold125Gray900a7,

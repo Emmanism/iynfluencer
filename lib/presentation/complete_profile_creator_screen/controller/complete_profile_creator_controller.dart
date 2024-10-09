@@ -5,8 +5,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:iynfluencer/core/app_export.dart';
 import 'package:iynfluencer/presentation/complete_profile_creator_screen/models/complete_profile_creator_model.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
+
+import '../../../data/general_controllers/user_controller.dart';
 
 /// A controller class for the CompleteProfileCreatorScreen.
 ///
@@ -19,12 +19,16 @@ class CompleteProfileCreatorController extends GetxController {
   TextEditingController frametwelvetwoController = TextEditingController();
   TextEditingController frametwelveController1 = TextEditingController();
   final apiClient = ApiClient();
-
+  final user = Get.put(UserController());
   Rx<CompleteProfileCreatorModel> completeProfileCreatorModelObj =
       CompleteProfileCreatorModel(bio: "", niches: []).obs;
 
-  Rxn<File> profileImage = Rxn<File>(); // Add this
+  Rxn<File> profileImage = Rxn<File>(); 
   var storage = FlutterSecureStorage();
+   Rx<bool> isLoading = false.obs;
+  var token;
+  var error = ''.obs;
+  RxString avatar = ''.obs;
 
   RxList<SelectionPopupModel> itemsToDisplay = RxList<SelectionPopupModel>();
 
@@ -87,6 +91,29 @@ class CompleteProfileCreatorController extends GetxController {
     update();
   }
 
+  getUser() async {
+    isLoading.value = true;
+    error('');
+    token = await storage.read(key: "token");
+    try {
+      await user.getUser();
+      if (user.userModelObj.value.firstName.isEmpty) {
+        error('Something went wrong');
+        isLoading.value = false;
+      } else {
+        error('');
+        print(user.userModelObj.value.avatar);
+        print(user.userModelObj.value.userId);
+        isLoading.value = false;
+        avatar.value = user.userModelObj.value.avatar;
+      }
+    } catch (e) {
+      print(e);
+      error('Something went wrong');
+      isLoading.value = false;
+    }
+  }
+
   ///this is the function called to create the creator profile on the backend
   Future<void> completeProfile() async {
     completeProfileCreatorModelObj.update((val) {
@@ -127,12 +154,14 @@ class CompleteProfileCreatorController extends GetxController {
   @override
   void onInit() {
     print('OnInit called');
+
     super.onInit();
     itemsToDisplay.value = dropdownItems.value
         .where((item) => !selectedDropdownItems.contains(item))
         .toList();
     selectedValue.value = SelectionPopupModel(id: 0, title: "Select Niche");
     print(itemsToDisplay.value);
+    getUser();
   }
 
   @override

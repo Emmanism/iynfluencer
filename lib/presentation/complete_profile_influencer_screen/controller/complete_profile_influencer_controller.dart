@@ -6,6 +6,7 @@ import 'package:iynfluencer/presentation/complete_profile_influencer_screen/mode
 import 'package:flutter/material.dart';
 
 import '../../../data/apiClient/api_client.dart';
+import '../../../data/general_controllers/user_controller.dart';
 
 class SocialMediaAccount {
   SelectionPopupModel platformName;
@@ -20,10 +21,15 @@ class SocialMediaAccount {
 
 class CompleteProfileInfluencerController extends GetxController
     with SingleGetTickerProviderMixin {
+  late FocusNode followersCountFocusNode;
+  late FocusNode platformUrlFocusNode;
+  late FocusNode bioFocusNode;
+  final user = Get.put(UserController());
   final formKey = GlobalKey<FormState>();
+  final formKey1 = GlobalKey<FormState>();
   var storage = FlutterSecureStorage();
   Rx<CompleteProfileInfluencerModel> completeProfileInfluencerModelObj =
-      CompleteProfileInfluencerModel(bio: "", niches: [], socials: []).obs;
+      CompleteProfileInfluencerModel(bio: "", niches: [], socials: [], user: []).obs;
 
   RxList<SelectionPopupModel> nicheToDisplay = RxList<SelectionPopupModel>();
   RxList<SelectionPopupModel> platformToDisplay = RxList<SelectionPopupModel>();
@@ -34,10 +40,17 @@ class CompleteProfileInfluencerController extends GetxController
 
   TextEditingController usernameController = TextEditingController();
   TextEditingController bioController = TextEditingController();
+  late TextEditingController followersCountController;
+  late TextEditingController platformUrlController;
   Rx<SelectionPopupModel> selectedNiche =
       SelectionPopupModel(id: 0, title: "Select Niche").obs;
   RxList<SelectionPopupModel> selectedNiches = <SelectionPopupModel>[].obs;
   Rxn<File> profileImage = Rxn<File>();
+
+   Rx<bool> isLoading = false.obs;
+  var token;
+  var error = ''.obs;
+  RxString avatar = ''.obs;
 
   final List<SelectionPopupModel> dropdownItems = [
     SelectionPopupModel(id: 0, title: "Select Niche"),
@@ -188,6 +201,30 @@ class CompleteProfileInfluencerController extends GetxController
     update();
   }
 
+  
+  getUser() async {
+    isLoading.value = true;
+    error('');
+    token = await storage.read(key: "token");
+    try {
+      await user.getUser();
+      if (user.userModelObj.value.firstName.isEmpty) {
+        error('Something went wrong');
+        isLoading.value = false;
+      } else {
+        error('');
+        print(user.userModelObj.value.avatar);
+        print(user.userModelObj.value.userId);
+        isLoading.value = false;
+        avatar.value = user.userModelObj.value.avatar;
+      }
+    } catch (e) {
+      print(e);
+      error('Something went wrong');
+      isLoading.value = false;
+    }
+  }
+
   ///this is the function called to create the creator profile on the backend
   Future<void> completeProfile() async {
     completeProfileInfluencerModelObj.update((val) {
@@ -241,11 +278,16 @@ class CompleteProfileInfluencerController extends GetxController
 
     // Define fade-in animation
     fadeInAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: animationController!, curve: Curves.easeIn),
+      CurvedAnimation(parent: animationController, curve: Curves.easeIn),
     );
 
     print('OnInit called');
     super.onInit();
+    followersCountController = TextEditingController();
+    platformUrlController = TextEditingController();
+    followersCountFocusNode = FocusNode();
+    platformUrlFocusNode = FocusNode();
+    bioFocusNode = FocusNode();
     nicheToDisplay.value =
         dropdownItems.where((item) => !selectedNiches.contains(item)).toList();
     selectedNiche.value = SelectionPopupModel(id: 0, title: "Select Niche");
@@ -257,11 +299,17 @@ class CompleteProfileInfluencerController extends GetxController
         id: 0, title: "Select Platform", value: "Select Platform");
 
     print(nicheToDisplay.value);
+    getUser();
   }
 
   @override
   void onClose() {
     super.onClose();
+    followersCountController.dispose();
+    platformUrlController.dispose();
+    followersCountFocusNode.dispose();
+    platformUrlFocusNode.dispose();
+    bioFocusNode.dispose();
     animationController.dispose();
     usernameController.dispose();
     bioController.dispose();

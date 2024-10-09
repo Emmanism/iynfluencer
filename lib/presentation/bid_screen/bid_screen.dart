@@ -1,5 +1,7 @@
+import 'package:iynfluencer/data/models/Jobs/job_influencer_model.dart';
 import 'package:iynfluencer/data/models/Jobs/job_model.dart';
 import 'package:iynfluencer/presentation/bid_screen/models/bid_model.dart';
+import 'package:iynfluencer/widgets/custoz_button.dart';
 
 import 'controller/bid_controller.dart';
 import 'package:flutter/material.dart';
@@ -13,12 +15,10 @@ import 'package:iynfluencer/widgets/custom_text_form_field.dart';
 
 class BidScreen extends GetWidget {
   BidScreen({Key? key}) : super(key: key);
-  final Job selectedJob = Get.arguments as Job;
+  final Jobz selectedJob = Get.arguments as Jobz;
 
   final BidController controller = Get.put(BidController(BidModel().obs));
   Widget _buildAccountForm() {
-    var termsAndConditionController = TextEditingController();
-
     return FadeTransition(
       opacity: Tween<double>(begin: 0.0, end: 1.0).animate(
         CurvedAnimation(
@@ -34,7 +34,7 @@ class BidScreen extends GetWidget {
                 focusNode: FocusNode(),
                 autofocus: true,
                 maxLines: 4,
-                controller: termsAndConditionController,
+                controller: controller.termsAndConditionController,
                 hintText: "msg_input_all_terms".tr,
                 margin: getMargin(
                   top: 6,
@@ -71,7 +71,7 @@ class BidScreen extends GetWidget {
                         if (controller.formKey.currentState!.validate()) {
                           controller.errorText.value = "";
                           controller.addTermsAndCondition(
-                              termsAndConditionController.text);
+                              controller.termsAndConditionController.text);
                           // controller.animationController.reverse();
                         }
                       },
@@ -88,144 +88,182 @@ class BidScreen extends GetWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: ColorConstant.whiteA700,
-        appBar: CustomAppBar(
-            height: getVerticalSize(48),
-            leadingWidth: 50,
-            leading: AppbarImage(
-                height: getSize(30),
-                width: getSize(30),
-                svgPath: ImageConstant.imgArrowleftGray600,
-                margin: getMargin(left: 20, top: 9, bottom: 9),
-                onTap: () {
-                  onTapArrowleft17();
-                }),
-            centerTitle: true,
-            title: AppbarTitle(text: "lbl_submit_bid".tr),
-            styleType: Style.bgOutlineIndigo50_1),
-        body: Container(
-          width: double.maxFinite,
-          padding: getPadding(all: 20),
-          child: Form(
-            key: controller.formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  "msg_gaming_app_influencer2".tr,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.left,
-                  style: AppStyle.txtSatoshiBold18,
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: ColorConstant.whiteA700,
+      appBar: CustomAppBar(
+          height: getVerticalSize(48),
+          leadingWidth: 50,
+          leading: AppbarImage(
+              height: getSize(30),
+              width: getSize(30),
+              svgPath: ImageConstant.imgArrowleftGray600,
+              margin: getMargin(left: 20, top: 9, bottom: 9),
+              onTap: () {
+                onTapArrowleft17();
+              }),
+          centerTitle: true,
+          title: AppbarTitle(text: "lbl_submit_bid".tr),
+          styleType: Style.bgOutlineIndigo50_1),
+      body: Container(
+        width: double.maxFinite,
+        padding: getPadding(all: 20),
+        child: Form(
+          key: controller.formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                "msg_gaming_app_influencer2".tr,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.left,
+                style: AppStyle.txtSatoshiBold18,
+              ),
+              Padding(
+                padding: getPadding(top: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "lbl_cover_letter".tr,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.left,
+                      style: AppStyle.txtSatoshiLight13Gray900,
+                    ),
+                    CustomTextFormField(
+                      focusNode: FocusNode(),
+                      autofocus: true,
+                      controller: controller.frametwelveController,
+                      hintText: "msg_explain_briefly".tr,
+                      margin: getMargin(top: 7),
+                      padding: TextFormFieldPadding.PaddingT38,
+                    )
+                  ],
                 ),
-                Padding(
-                  padding: getPadding(top: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        "lbl_cover_letter".tr,
+              ),
+              Padding(
+                padding: getPadding(top: 19),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text("lbl_project_charge".tr,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
-                        style: AppStyle.txtSatoshiLight13Gray900,
-                      ),
-                      CustomTextFormField(
-                        focusNode: FocusNode(),
-                        autofocus: true,
-                        controller: controller.frametwelveController,
-                        hintText: "msg_explain_briefly".tr,
-                        margin: getMargin(top: 7),
-                        padding: TextFormFieldPadding.PaddingT38,
-                      )
-                    ],
-                  ),
+                        style: AppStyle.txtSatoshiLight13Gray900),
+                    CustomTextFormField(
+                      focusNode: FocusNode(),
+                      autofocus: true,
+                      controller: controller.priceController,
+                      hintText: "lbl_300".tr,
+                      margin: getMargin(top: 6),
+                      textInputAction: TextInputAction.done,
+                    )
+                  ],
                 ),
-                Padding(
-                  padding: getPadding(top: 19),
+              ),
+              Padding(
+                  padding: getPadding(top: 27, bottom: 5),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("lbl_project_charge".tr,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: AppStyle.txtSatoshiLight13Gray900),
-                      CustomTextFormField(
-                        focusNode: FocusNode(),
-                        autofocus: true,
-                        controller: controller.priceController,
-                        hintText: "lbl_300".tr,
-                        margin: getMargin(top: 6),
-                        textInputAction: TextInputAction.done,
-                      )
-                    ],
-                  ),
-                ),
-                Padding(
-                    padding: getPadding(top: 27, bottom: 5),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          "msg_terms_of_contract".tr,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: AppStyle.txtSatoshiBold14Gray900,
-                        ),
-                        CustomButton(
-                          height: getVerticalSize(44.h),
-                          text: "Add the Terms of Contract",
-                          onTap: () {
-                            controller.startAddingTermsOfContract();
-                          },
-                          margin: getMargin(top: 24.h),
-                          variant: ButtonVariant.OutlineGray300b2,
-                          padding: ButtonPadding.PaddingT12,
-                          fontStyle: ButtonFontStyle.SatoshiLight14,
-                          prefixWidget: Container(
-                            margin: getMargin(right: 6.w),
-                            child: CustomImageView(
-                                svgPath: ImageConstant.imgFrameGray700),
-                          ),
-                        ),
-                        Obx(() => controller.isAddingTermsOfContract.value
-                            ? _buildAccountForm()
-                            : _buildAccountChips()),
-                        if (controller.errorText.value != null)
-                          Obx(
-                            () => Text(
-                              controller.errorText.value,
-                              style: TextStyle(
-                                color: Colors.red,
-                                fontSize: 10.sp,
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(top:4),
+                                child: Text(
+                                  "Add deliverables".tr,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  style: AppStyle.txtSatoshiBold14Gray900
+                                      .copyWith(
+                                          fontSize: 16,
+                                          color: ColorConstant.black900),
+                                ),
                               ),
+                              const SizedBox(width: 8),
+                              CustomImageView(
+                                margin: EdgeInsets.only(top: 5),
+                                fit: BoxFit.cover,
+                                alignment: Alignment.centerRight,
+                                svgPath: ImageConstant.imgInformation,
+                                width: getHorizontalSize(20),
+                                height: getHorizontalSize(20),
+                                color: ColorConstant.blueGray400,
+                              )
+                            ],
+                          ),
+                          CustomButton(
+                            height: getHorizontalSize(40),
+                            width: getHorizontalSize(70),
+                            prefixWidget: Text(
+                              "+",
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
+                              style: AppStyle.txtSatoshiBold14Gray900
+                                  .copyWith(
+                                      fontSize: 16,
+                                      color: ColorConstant.whiteA700),
                             ),
+                            text: " Add",
+                            onTap: () {
+                              controller.startAddingTermsOfContract();
+                            },
+                            padding: ButtonPadding.PaddingT52,
+                            fontStyle: ButtonFontStyle.SatoshiBold13WhiteA700,
+                            shape: ButtonShapes.RoundedBorder122,
                           )
-                      ],
-                    )),
-              ],
-            ),
+                        ],
+                      ),
+                      Obx(() => controller.isAddingTermsOfContract.value
+                          ? _buildAccountForm()
+                          : _buildAccountChips()),
+                      if (controller.errorText.value != null)
+                        Obx(
+                          () => Text(
+                            controller.errorText.value,
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontSize: 10.sp,
+                            ),
+                          ),
+                        )
+                    ],
+                  )),
+            ],
           ),
         ),
-        bottomNavigationBar: Container(
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Container(
           margin: getMargin(left: 20, right: 20, bottom: 20),
           decoration: AppDecoration.outlineIndigo507,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              CustomButton(
-                height: getVerticalSize(44),
-                text: "lbl_submit_bid2".tr,
-                padding: ButtonPadding.PaddingAll12,
-                onTap: () {
-                  controller.submitForm(context, selectedJob.jobId!);
-                },
+              Obx(
+                () => CustomButton(
+                  height: getVerticalSize(44),
+                  text: "lbl_submit_bid2".tr,
+                  padding: ButtonPadding.PaddingAll12,
+                  loading: controller.isLoading.value,
+                  onTap: () {
+                    controller.submitForm(
+                      context, 
+                      selectedJob.jobId!,
+                      selectedJob.creator?.userId ?? '',
+                      selectedJob.title!
+                      
+                      );
+                  },
+                ),
               ),
             ],
           ),
@@ -246,10 +284,40 @@ class BidScreen extends GetWidget {
       child: Wrap(
         spacing: 8.0.w,
         children: responsibilitiesCopy.map((account) {
-          return Chip(
-            label: Text("${account.toString()}"),
-            deleteIcon: Icon(Icons.close),
-            onDeleted: () => controller.handleDelete(account),
+          return Padding(
+            padding: const EdgeInsets.only(
+              top:15
+            ),
+            child: CustozButton(
+              margin: EdgeInsets.symmetric(
+                vertical: 1
+              ),
+              height: getHorizontalSize(58),
+              width: double.infinity,
+              variant: ButtonVariantzz.gray700,
+              padding: ButtonPaddingzz.PaddingAll12,
+              prefixWidget: Text(
+              //  "${account.toString()}",
+              truncateWithEllipsis(
+                  myString: "${account.toString()}",
+                  textLength: 33,
+                  ),
+                textAlign: TextAlign.left,
+                style: AppStyle.txtSatoshiBold14Gray600ab.copyWith(
+                  fontSize: 14,
+                  color: ColorConstant.black9000,
+                  fontWeight: FontWeight.w500
+                ),
+              ),
+              suffixWidget: Align(
+                alignment: Alignment.centerRight,
+                child: InkWell(
+                    onTap: () {
+                      controller.handleDelete(account);
+                    },
+                    child: Icon(Icons.close)),
+              ),
+            ),
           );
         }).toList(),
       ),

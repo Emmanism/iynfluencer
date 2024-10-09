@@ -1,12 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../core/utils/color_constant.dart';
 import '../../core/utils/size_utils.dart';
-import '../../routes/app_routes.dart';
 import '../../theme/app_style.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_image_view.dart';
@@ -33,34 +31,34 @@ class ProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      width: 140.w,
-      height: 140.h,
+      width: getHorizontalSize(135),
+      height: getVerticalSize(135),
       duration: Duration(milliseconds: 300),
       curve: Curves.easeInOut,
-      margin: EdgeInsets.all(5.0.w),
+      margin: EdgeInsets.all(5.0),
       decoration: BoxDecoration(
         color: isSelected ? Color(0xff5DC8E0) : Colors.grey[200],
-        borderRadius: BorderRadius.circular(15.0.r),
+        borderRadius: BorderRadius.circular(15.0),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 3.w,
-            blurRadius: 5.w,
-            offset: Offset(0.w, 3.w),
+            spreadRadius: 3,
+            blurRadius: 5,
+            offset: Offset(0, 3),
           ),
         ],
       ),
       child: Center(
         child: Padding(
-          padding: EdgeInsets.all(8.0.w),
+          padding: getPadding(all: 8),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 24.sp, color: isSelected ? Colors.white : Colors.black,),
+              Icon(icon, size: getSize(24), color: isSelected ? Colors.white : Colors.black,),
+              SizedBox(height: getVerticalSize(10)),
+              Text(title, style: TextStyle(fontSize: getFontSize(12), color: isSelected ? Colors.white : Colors.black), textAlign: TextAlign.center,),
               SizedBox(height: 10.h),
-              Text(title, style: TextStyle(fontSize: 12.sp, color: isSelected ? Colors.white : Colors.black), textAlign: TextAlign.center,),
-              SizedBox(height: 10.h),
-              Text(description, style: TextStyle(fontSize: 10.sp, color: isSelected ? Colors.white : Colors.black), textAlign: TextAlign.center, maxLines: 3, overflow: TextOverflow.ellipsis,),
+              Text(description, style: TextStyle(fontSize: getFontSize(10), color: isSelected ? Colors.white : Colors.black), textAlign: TextAlign.center, maxLines: 3, overflow: TextOverflow.ellipsis,),
             ],
           ),
         ),
@@ -121,102 +119,102 @@ class ChooseProfile extends StatelessWidget {
     double cardWidth = 140;
     double spaceBetween = (screenWidth - 2 * padding - 2 * cardWidth) / 2;
 
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          elevation: 0.0,
-          backgroundColor: Colors.white,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Color(0xff5DC8E0)),
-            onPressed: () => Get.back(),
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Color(0xff5DC8E0)),
+          onPressed: () => Get.back(),
         ),
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: padding),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 5.w, top: 2.h),
-                child: Text("Choose a profile", overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtH1),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 10.h),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Obx(
-                          () => InkWell(
-                        onTap: () {
-                          _controller.selectedCard.value = 0;
-                        },
-                        child: ProfileCard(
-                          isSelected: _controller.selectedCard.value == 0,
-                          icon: Icons.person_outline,
-                          title: "Creator",
-                          description: "Reach out to influencers to promote your product, brand or content.",
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: spaceBetween),
-                    Obx(
-                          () => InkWell(
-                        onTap: () {
-                          _controller.selectedCard.value = 1;
-                        },
-                        child: ProfileCard(
-                          isSelected: _controller.selectedCard.value == 1,
-                          icon: Icons.star_border,
-                          title: "Influencer",
-                          description: "Connect to people that will pay for your audience. Browse gigs and earn.",
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Obx(
-                      () => CarouselSlider.builder(
-                    options: CarouselOptions(
-                      height: 200.h,
-                      initialPage: 0,
-                      autoPlay: true,
-                      viewportFraction: 1.0,
-                      enableInfiniteScroll: false,
-                      scrollDirection: Axis.horizontal,
-                      onPageChanged: (index, reason) {
-                        _controller.sliderIndex.value = index;
+      ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: padding),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 5.w, top: 2.h),
+              child: Text("Choose a profile", overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtH1),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 10.h),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Obx(
+                        () => InkWell(
+                      onTap: () {
+                        _controller.selectedCard.value = 0;
                       },
+                      child: ProfileCard(
+                        isSelected: _controller.selectedCard.value == 0,
+                        icon: Icons.person_outline,
+                        title: "Creator",
+                        description: "Reach out to influencers to promote your product, brand or content.",
+                      ),
                     ),
-                    itemCount: _controller.onboardingScreenTwoModelObj.value.sliderarrowleftItemList.value.length,
-                    itemBuilder: (context, index, realIndex) {
-                      SliderarrowleftItemModel model = _controller.onboardingScreenTwoModelObj.value.sliderarrowleftItemList.value[index];
-                      return SliderarrowleftItemWidget(model);
+                  ),
+                  SizedBox(width: spaceBetween),
+                  Obx(
+                        () => InkWell(
+                      onTap: () {
+                        _controller.selectedCard.value = 1;
+                      },
+                      child: ProfileCard(
+                        isSelected: _controller.selectedCard.value == 1,
+                        icon: Icons.star_border,
+                        title: "Influencer",
+                        description: "Connect to people that will pay for your audience. Browse gigs and earn.",
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Obx(
+                    () => CarouselSlider.builder(
+                  options: CarouselOptions(
+                    height: 200.h,
+                    initialPage: 0,
+                    autoPlay: true,
+                    viewportFraction: 1.0,
+                    enableInfiniteScroll: false,
+                    scrollDirection: Axis.horizontal,
+                    onPageChanged: (index, reason) {
+                      _controller.sliderIndex.value = index;
                     },
                   ),
+                  itemCount: _controller.onboardingScreenTwoModelObj.value.sliderarrowleftItemList.value.length,
+                  itemBuilder: (context, index, realIndex) {
+                    SliderarrowleftItemModel model = _controller.onboardingScreenTwoModelObj.value.sliderarrowleftItemList.value[index];
+                    return SliderarrowleftItemWidget(model);
+                  },
                 ),
               ),
-              Obx(
-                    () => Container(
-                  height: 10.h,
-                  margin: getMargin(top: 19),
-                  child: AnimatedSmoothIndicator(
-                    activeIndex: _controller.sliderIndex.value,
-                    count: _controller.onboardingScreenTwoModelObj.value.sliderarrowleftItemList.value.length,
-                    axisDirection: Axis.horizontal,
-                    effect: ScrollingDotsEffect(
-                      spacing: 9.w,
-                      activeDotColor: ColorConstant.whiteA700,
-                      dotColor: ColorConstant.blueGray1007f,
-                      dotHeight: 10.h,
-                      dotWidth: 10.w,
-                    ),
+            ),
+            Obx(
+                  () => Container(
+                height: 10.h,
+                margin: getMargin(top: 19),
+                child: AnimatedSmoothIndicator(
+                  activeIndex: _controller.sliderIndex.value,
+                  count: _controller.onboardingScreenTwoModelObj.value.sliderarrowleftItemList.value.length,
+                  axisDirection: Axis.horizontal,
+                  effect: ScrollingDotsEffect(
+                    spacing: 9.w,
+                    activeDotColor: ColorConstant.whiteA700,
+                    dotColor: ColorConstant.blueGray1007f,
+                    dotHeight: 10.h,
+                    dotWidth: 10.w,
                   ),
                 ),
               ),
-              CustomButton(
+            ),
+            SafeArea(
+              child: CustomButton(
                 height: 50.h,
                 text: "Continue",
                 margin: getMargin(top: 34),
@@ -225,11 +223,11 @@ class ChooseProfile extends StatelessWidget {
                   onTapSignupasa();
                 },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-        backgroundColor: Colors.white,
       ),
+      backgroundColor: Colors.white,
     );
   }
 
